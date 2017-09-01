@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.objectFactory" value="spring"/>
+
+    <package name="basicstruts2" extends="struts-default">
+
+        <interceptors>
+            <!--注册拦截器(拦截未登录用户)-->
+            <interceptor name="BOSLoginIntercept" class="com.mrli.passwordmanager.intercept.BOSLoginIntercept">
+                <param name="excludeMethods">login,getValidateCode,register,save</param>
+            </interceptor>
+            <!--创建拦截器栈,将新拦截器添加进栈-->
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="BOSLoginIntercept"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <!--指定默认拦截器栈-->
+        <default-interceptor-ref name="myStack"/>
+
+        <!-- 全局返回结果 -->
+        <global-results>
+            <result name="login">login.jsp</result>
+        </global-results>
+
+        <!-- 需要进行权限控制的页面访问 -->
+        <action name="page_*_*">
+            <result name="success" type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
+        </action>
+
+        <action name="userAction_*" class="userAction" method="{1}">
+            <result name="index">WEB-INF/pages/common/index.jsp</result>
+            <result name="register">register.jsp</result>
+        </action>
+        <action name="APMAction_*" class="APMAction" method="{1}">
+
+        </action>
+    </package>
+
+</struts>
