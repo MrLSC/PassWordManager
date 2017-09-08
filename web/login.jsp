@@ -69,7 +69,7 @@
                 </form>
                 <div class="clearfix select-a">
                     <div class="pull-left registered"><a href="register.jsp">免费注册</a></div>
-                    <div class="pull-right forget"><a href="">忘记密码</a></div>
+                    <div class="pull-right forget"><a href="forget.jsp">忘记密码</a></div>
                 </div>
                 <div class="login-btn">
                     <a id="loginBtn">

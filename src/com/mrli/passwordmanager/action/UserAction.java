@@ -102,6 +102,19 @@ public class UserAction extends BaseAction<User> {
         return "login";
     }
 
+    public String forgetPassword(){
+        String smsKey = (String) ServletActionContext.getRequest().getSession().getAttribute("smsKey");
+        if (StringUtils.isNotBlank(smsKey) && validateCode.equals(smsKey)) {
+            User user = getModel();
+            userService.editPassword(user.getPassword(),user.getId());
+        } else {
+            this.addActionError("验证码错误!");
+            return "register";
+        }
+
+        return "login";
+    }
+
 
     /**
      * 产生随机的六位数
